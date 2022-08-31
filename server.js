@@ -8,6 +8,6 @@ app.get("/", function(req, res) {
   res.sendfile(__dirname +'/dist/index.html')
 })
 
-app.listen(3000, function() {
+app.listen(porta, function() {
   console.log("está servindo o app")
 })
