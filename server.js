@@ -9,11 +9,14 @@ app.use(history({
 }))
 
 app.get("/", function(req, res) {
+
   res.sendfile(__dirname + '/dist/index.html')
 })
 
 app.get("/buscaGrupo", function(req, res) {
-  res.sendfile(__dirname + '/dist/index.html')
+  console.log("tentou entrar nesta página")
+  res.send("hemlo")
+  // res.sendfile(__dirname + '/dist/index.html')
 })
 
 app.listen(porta, function() {
