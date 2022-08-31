@@ -19,11 +19,40 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
     }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: function () {
+      return import('../views/Login.vue')
+    }
+  },
+  {
+    path: '/cadastro',
+    name: 'cadastro',
+    component: function () {
+      return import('../views/Cadastro.vue')
+    }
+  },
+  {
+    path: '/buscaGrupo',
+    name: 'buscaGrupo',
+    component: function() {
+      return import('../views/buscaDeGrupos.vue')
+    }
+  },
+  {
+    path: '/grupos/:id',
+    name: 'grupo',
+    component: function() {
+      return import('../views/Grupo.vue')
+    }
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
+  linkActiveClass: "Active",
   base: process.env.BASE_URL,
   routes
 })

@@ -1,32 +1,51 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <div class="d-flex justify-center">
+        <v-btn color="secondary" to="/">Inicial</v-btn>
+      </div>
+      <v-spacer></v-spacer>
+      <div class="d-flex justify-center">
+        <v-row v-if="!isLoggedIn">
+          <v-col>
+            <v-btn justify="space-bewteen" color="secondary" to="login">Login</v-btn>
+          </v-col>
+          <v-col>
+            <v-btn justify="space-bewteen" color="secondary" to="cadastro">Cadastro</v-btn>
+          </v-col>
+        </v-row>
+        <v-row v-else>
+          
+        </v-row>
+      </div>
+    </v-app-bar>
+
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import {mapGetters} from 'vuex'
 
-nav {
-  padding: 30px;
-}
+export default {
+  name: "App",
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  data: () => ({
+    isLoggedIn: false,
+    username: null,
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  }),
+  computed: {
+    ...mapGetters(['getIsLoggedIn','getUsername']),
+    loggedIn() {
+      this.isLoggedIn = getIsLoggedIn
+    },
+    getUsername() {
+      this.username = getUsername
+    }
+
+  }
+};
+</script>
