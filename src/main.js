@@ -4,8 +4,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import AudioRecorder from 'vue-audio-recorder'
+import VueRecord from '@codekraft-studio/vue-record'
+
+Vue.use(VueRecord)
+// Vue.use(AudioRecorder)
 
 Vue.config.productionTip = false
+
 
 new Vue({
   router,

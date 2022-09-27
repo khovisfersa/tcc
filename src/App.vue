@@ -13,9 +13,6 @@
           <v-col>
             <v-btn justify="space-bewteen" color="secondary" to="cadastro">Cadastro</v-btn>
           </v-col>
-<!--           <v-col>
-            <v-btn justify="space-bewteen" color="secondary" to="buscaGrupo">Busca de grupo</v-btn>
-          </v-col> -->
         </v-row>
         <v-row v-else>
           

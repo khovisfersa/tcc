@@ -47,6 +47,13 @@ const routes = [
     component: function() {
       return import('../views/Grupo.vue')
     }
+  },
+  {
+    path: '/grupo/tarefa_ativa',
+    name: "tarefa_ativa",
+    component: function() {
+      return import('../views/TarefaAtiva.vue')
+    }
   }
 ]
 

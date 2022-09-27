@@ -19,6 +19,7 @@ app.get("/buscaGrupo", function(req, res) {
   // res.sendfile(__dirname + '/dist/index.html')
 })
 
+
 app.listen(porta, function() {
-  console.log("está servindo o app")
+  console.log(`está servindo o app: ${porta}`)
 })
