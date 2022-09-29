@@ -74,7 +74,7 @@ export default {
         password: password
 
       }
-      await axios.post("/cadastro", user_info)
+      await axios.post("http://localhost:3333/cadastro", user_info)
       .then((req,res) => {
         this.firstName = "",
         this.lastName = "",

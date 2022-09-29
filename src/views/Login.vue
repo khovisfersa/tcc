@@ -45,6 +45,7 @@ export default {
     source: String,
   },
   data: () => ({
+      api: "http://localhost:3333",
       username: '',
       password: '',
     }),
@@ -60,12 +61,17 @@ export default {
         withCredentials: true
       }
 
-      await axios.post('/login', user_info, config)
-      .then( (req,res) => {
+      await axios.post(this.$api + '/login', user_info)
+      .then( (res) => {
         console.log(res)
+        localStorage.setItem('token', res.data.token)
+        this.$router.push('/')
+      })
+      .catch((err) => {
+        console.log(err)
       })
 
-      axios.defaults.headers.commom["Authorization"] = `Bearer ${data.token}`;
+      // axios.defaults.headers.commom["Authorization"] = `Bearer ${data.token}`;
 
       // this.$router.push("/")
     }
