@@ -13,6 +13,7 @@
                     name="login"
                     label="Login"
                     type="text"
+                    v-model="username"
                   ></v-text-field>
                   <v-text-field
                     id="password"
@@ -20,11 +21,12 @@
                     name="password"
                     label="Password"
                     type="password"
+                    v-model="password"
                   ></v-text-field>
                 </v-form>
               </div>
               <div class="d-flex justify-center pt-10">
-                <v-btn color="secondary" to="/">Login</v-btn>
+                <v-btn @click="login()" color="secondary">Login</v-btn>
               </div>
             </div>
           </v-flex>
@@ -34,12 +36,40 @@
   </v-app>
 </template>
 
-<script>
+<script type="text/javascript">
+import axios from "axios"
+
 export default {
   name: "Login",
   props: {
     source: String,
   },
+  data: () => ({
+      username: '',
+      password: '',
+    }),
+  methods: {
+    async login() {
+      console.log("log in")
+      let user_info = {
+        username: this.username,
+        password: this.password
+      }
+
+      let config = {
+        withCredentials: true
+      }
+
+      await axios.post('/login', user_info, config)
+      .then( (req,res) => {
+        console.log(res)
+      })
+
+      axios.defaults.headers.commom["Authorization"] = `Bearer ${data.token}`;
+
+      // this.$router.push("/")
+    }
+  }
 };
 </script>
 

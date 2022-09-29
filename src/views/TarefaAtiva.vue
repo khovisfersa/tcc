@@ -35,7 +35,7 @@
 								<v-card-text v-if="tarefa1.tipo === 'audio'">
 					        <VueRecordAudio mode="press" @result="onResult" />
 
-									<v-dialog v-model="showDialog" width="510" persistent>
+									<!-- <v-dialog v-model="showDialog" width="510" persistent>
 										<v-template>
 											<v-card width="500" height="250">
 												<v-card-title>Você está satisfeito com sua resposta?</v-card-title>
@@ -47,7 +47,7 @@
 												</v-card-actions>
 											</v-card>
 										</v-template>
-									</v-dialog>
+									</v-dialog> -->
 								</v-card-text>
 								<v-card-actions>
 									<v-btn class="accent" @click="enviarResposta(nova_resposta.texto)">Enviar</v-btn>
@@ -139,7 +139,13 @@ import axios from "axios"
 				console.log("AAAAAA")
 				// console.log(data)
 				this.data = data
-				this.showDialog = true
+				// this.showDialog = true
+				const confirmar = window.confirm("Deseja eviar o áudio gravado?")
+				if(confirmar) {
+					this.onAccept()
+				} else {
+					this.onDeny()
+				}
 			},
 			onAccept() {
 				// let url = '....'
@@ -156,7 +162,7 @@ import axios from "axios"
 					}
 				}
 				this.showDialog = false
-				axios.post('http://15.228.46.82:3333/upload_audio', data, config)
+				axios.post('/upload_audio', data, config)
 				.then(() => {
 					console.log("deu bom!")
 				})
@@ -180,7 +186,7 @@ import axios from "axios"
 				// }
 			},
 			onDeny() {
-				this.showDialog = false
+				// this.showDialog = false
 				this.data = null
 			}
 		}
