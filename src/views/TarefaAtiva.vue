@@ -28,29 +28,20 @@
 						</v-col>
 						<v-col cols=9>
 							<v-card v-if="mostrar_card_resposta">
-								<v-card-title>Responder item {{nova_resposta.identificador}}</v-card-title>
+								<v-card-title>Responder item {{ identificador }}</v-card-title>
+								<v-card-subtitle><a href="https://online-voice-recorder.com/pt/" target="_blank">Link para um lugar para gravar os audios</a></v-card-subtitle>
 								<v-card-text v-if="tarefa1.tipo === 'texto'">
 									<v-textarea class="px-5" :label='"resposta ao item "+ nova_resposta.identificador' v-model="nova_resposta.texto" auto-grow outlined name="resposta_texto"></v-textarea>
 								</v-card-text>
 								<v-card-text v-if="tarefa1.tipo === 'audio'">
-					        <VueRecordAudio mode="press" @result="onResult" />
-
-									<!-- <v-dialog v-model="showDialog" width="510" persistent>
-										<v-template>
-											<v-card width="500" height="250">
-												<v-card-title>Você está satisfeito com sua resposta?</v-card-title>
-												<v-card-actions>
-													<v-row>
-														<v-col><v-btn class="primary" @click="onAccept">Sim</v-btn></v-col>
-														<v-col><v-btn class="warning" @click="onDeny">Não</v-btn></v-col>
-													</v-row>
-												</v-card-actions>
-											</v-card>
-										</v-template>
-									</v-dialog> -->
+					        <!-- <VueRecordAudio mode="press" @result="onResult" />	 -->
+					        <v-form>
+						        <v-file-input accept=".mp3"  show-size v-model="file" label="Selecione o arquivo"/>
+						       </v-form>
 								</v-card-text>
 								<v-card-actions>
-									<v-btn class="accent" @click="enviarResposta(nova_resposta.texto)">Enviar</v-btn>
+									<v-btn v-if="this.tarefa1.tipo == 'texto'" class="accent" @click="enviarResposta(nova_resposta.texto)">Enviar</v-btn>
+									<v-btn v-else class="accent" @click="onAccept()">Enviar</v-btn>
 								</v-card-actions>
 							</v-card>
 						</v-col>
@@ -58,12 +49,16 @@
 				</v-container>
 			</v-card-text>
 		</v-card>
-
+		<router-view></router-view>
 	</v-container>
 </template>
 
 <script type="text/javascript">
 import axios from "axios"
+import { mapGetters, mapMutations } from "vuex"
+import { getUserId } from '../store/function.js'
+
+// Para produção trocar as instâncias de tarefa1 por tarefa
 
 	export default {
 		name: "tarefa_ativa",
@@ -76,6 +71,10 @@ import axios from "axios"
 				faltantes: [],
 				nova_resposta: {},
 				data: null,
+				file: null,
+				identificador: null,
+				link: "http://15.228.46.82:3333",
+				// link: "http://localhost:3333",
 				mostrar_card_resposta: false,
 				total_partes: [1,2,3,4,5],
 				showDialog: false,
@@ -114,8 +113,13 @@ import axios from "axios"
 		},
 		created() {
 			this.getDone(this.resposta1);
+			// this.$store.getters.
+		},
+		computed: {
+			...mapGetters['getToken']
 		},
 		methods:{
+			// ...mapMutations(['setToken']),
 			getDone(resposta) {
 				let complete = [1,2,3,4,5]
 				resposta.forEach((e) => {
@@ -124,6 +128,7 @@ import axios from "axios"
 				this.faltantes = complete
 			},
 			responder(item) {
+				this.identificador = item
 				this.mostrar_card_resposta = true
 				this.nova_resposta.identificador = item
 				if(this.tarefa1.tipo === "texto") this.nova_resposta.texto = "";
@@ -135,11 +140,8 @@ import axios from "axios"
 				console.log(msg)
 			},
 			onResult(data) {
-				// alert("AAAAAAAAAAAA-AAAAAAAAAAA")
 				console.log("AAAAAA")
-				// console.log(data)
 				this.data = data
-				// this.showDialog = true
 				const confirmar = window.confirm("Deseja eviar o áudio gravado?")
 				if(confirmar) {
 					this.onAccept()
@@ -150,24 +152,35 @@ import axios from "axios"
 			onAccept() {
 				// let url = '....'
 
+				// getUserId()
+				console.log("get token: " + localStorage.token)
+				
 				let data = new FormData()
 
 				data.append('name', 'audio')
-				data.append('file', this.data)
-				data.append('filename', 'Prikith')
+				data.append('file', this.file)
+				data.append('filename', this.identificador+"-2-1")
+				// data.append('user_id', )
+
+				let user_id = getUserId(token)
 
 				let config = {
 					header: {
-						'Content-Type' : 'multipart/form-data'
+						'Content-Type' : 'multipart/form-data',
+						'x-access-token' : localStorage.token
 					}
 				}
-				this.showDialog = false
-				axios.post('/upload_audio', data, config)
+
+				// console.log(config)
+
+				axios.post(this.link + '/upload_audio', data, config)
 				.then(() => {
 					console.log("deu bom!")
+					this.file = '' 
 				})
 				.catch(err => {
 					console.log(err)
+					console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 				})
 
 				// try {

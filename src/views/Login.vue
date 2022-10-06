@@ -38,6 +38,8 @@
 
 <script type="text/javascript">
 import axios from "axios"
+import { updateToken } from '../store/function.js'
+import { mapMutations } from 'vuex'
 
 export default {
   name: "Login",
@@ -50,6 +52,9 @@ export default {
       password: '',
     }),
   methods: {
+    ...mapMutations([
+      'setToken'
+      ]),
     async login() {
       console.log("log in")
       let user_info = {
@@ -57,23 +62,24 @@ export default {
         password: this.password
       }
 
-      let config = {
-        withCredentials: true
-      }
-
       await axios.post(this.$api + '/login', user_info)
       .then( (res) => {
         console.log(res)
         localStorage.setItem('token', res.data.token)
+        try {
+          // updateToken(res.data.token)
+          this.$store.commit('setToken', res.data.token)
+        } catch(err) {
+          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+          console.log(err)
+          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        }
         this.$router.push('/')
       })
       .catch((err) => {
         console.log(err)
+        alert("Credenciais inválidas")
       })
-
-      // axios.defaults.headers.commom["Authorization"] = `Bearer ${data.token}`;
-
-      // this.$router.push("/")
     }
   }
 };

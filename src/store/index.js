@@ -5,22 +5,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    token: null,
     user: null,
     isLoggedIn: false,
     isAdmin: false,
     isConteudista: false,
   },
   getters: {
+    getUserToken(state) {
+      return state.token
+    },
     getIsLoggedIn(state, getters) {
       return state.isLoggedIn
     },
     getUser(state, getters) {
       return state.user
     },
-    getIsAdmin(state,getters) {
+    getIsAdmin(state, getters) {
       return state.isAdmin
     },
-    getIsConteudista(state,getters) {
+    getIsConteudista(state, getters) {
       return state.isConteudista
     }
   },
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     mutationLogin(state, user_name) {
       state.isLoggedIn = true
       state.user = user_name
+    },
+    setToken(state, token) {
+      state.token = token
     }
   },
   actions: {

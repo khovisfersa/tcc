@@ -9,7 +9,7 @@ import VueRecord from '@codekraft-studio/vue-record'
 
 
 Vue.use(VueRecord)
-// Vue.use(AudioRecorder)
+Vue.use(AudioRecorder)
 
 Vue.config.productionTip = false
 

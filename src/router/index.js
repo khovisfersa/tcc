@@ -71,17 +71,17 @@ const router = new VueRouter({
 })
 
 // router.beforeEach((to, from) => {
-router.beforeEach((to,from,next) => {
-  console.log("before each")
-  if(!to.meta.auth) { 
-    console.log("not authenticated")
-    next()
-  }
-  else if(to.meta.auth) { 
-    console.log("authenticated")   
-    next('/home')
-  }
-})
+// router.beforeEach((to,from,next) => {
+//   console.log("before each")
+//   if(!to.meta.auth) { 
+//     console.log("not authenticated")
+//     next()
+//   }
+//   else if(to.meta.auth) { 
+//     console.log("authenticated")   
+//     next('/home')
+//   }
+// })
 
 // router.afterEach((to,from) => {
 // router.afterEach(() => {
