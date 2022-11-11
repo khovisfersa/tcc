@@ -9,7 +9,7 @@ export async function getUserInfo(token) {
 		}
 	}
 	console.log("getUserInfo")
-	await axios.get('/user_info', config)
+	await axios.get(this.$api + '/user_info', config)
 	.then((res) => {
 		console.log("res: ")
 		console.log(res.data)
