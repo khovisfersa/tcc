@@ -39,7 +39,7 @@
 <script type="text/javascript">
 import axios from "axios"
 import { updateToken } from '../store/function.js'
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: "Login",
@@ -47,16 +47,16 @@ export default {
     source: String,
   },
   data: () => ({
-      api: "http://localhost:3333",
+      api: "https://lfstcc.click",
       username: '',
       password: '',
     }),
+  computed: {
+    ...mapGetters(['getUserToken', 'getUser'])
+  },
   methods: {
-    ...mapMutations([
-      'setToken'
-      ]),
+    ...mapMutations(['setToken', 'setUser', 'setIsAdmin', 'setIsConteudista']),
     async login() {
-      console.log("log in")
       let user_info = {
         username: this.username,
         password: this.password
@@ -64,16 +64,14 @@ export default {
 
       await axios.post(this.$api + '/login', user_info)
       .then( (res) => {
-        console.log(res)
         localStorage.setItem('token', res.data.token)
-        try {
-          // updateToken(res.data.token)
-          this.$store.commit('setToken', res.data.token)
-        } catch(err) {
-          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-          console.log(err)
-          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-        }
+        localStorage.setItem('username', res.data.username)
+        localStorage.setItem('usuario_id', res.data.usuario_id)
+        localStorage.setItem('grupo_id', res.data.grupo_id)
+        this.setToken(res.data.token)
+        this.setUser(res.data.username)
+        this.setIsAdmin(res.data.isadmin)
+        this.setIsConteudista(res.data.isconteudista)
         this.$router.push('/')
       })
       .catch((err) => {

@@ -1,6 +1,30 @@
 import store from '../store'
 import axios from 'axios'
 
+export async function getUserInfo(token) {
+	let config = {
+		headers: {
+			'Content-Type' : 'multipart/form-data',
+			'x-access-token' : token
+		}
+	}
+	console.log("getUserInfo")
+	await axios.get('/user_info', config)
+	.then((res) => {
+		console.log("res: ")
+		console.log(res.data)
+		store.commit('setToken', res.data.token)
+		store.commit('setUser', res.data.username)
+		store.commit('setIsAdmin',res.data.isadmin)
+		store.commit('setIsConteudista',res.data.isconteudista)
+		store.commit('setUserId', res.data.user_id)
+		store.commit('setGrupoId', res.data.grupo_id)
+	})
+	.catch((err) => {
+		console.log(err)
+	})
+}
+
 export async function getUserId (token) {
 	let config = {
 		header: {

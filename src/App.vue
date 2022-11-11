@@ -2,16 +2,18 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <div class="d-flex justify-center">
-        <v-btn color="secondary" to="/">Inicial</v-btn>
+        <v-btn color="secondary" to="/home">Inicial</v-btn>
       </div>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
         <v-row v-if="!isLoggedIn">
           <v-col>
-            <v-btn justify="space-bewteen" color="secondary" to="login">Login</v-btn>
+            <v-btn v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toLogin" >Login</v-btn>
+            <v-btn v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserHome" >{{ getUser }}</v-btn>
           </v-col>
           <v-col>
-            <v-btn justify="space-bewteen" color="secondary" to="cadastro">Cadastro</v-btn>
+            <v-btn v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toCadastro">Cadastro</v-btn>
+
           </v-col>
         </v-row>
         <v-row v-else>
@@ -37,8 +39,19 @@ export default {
     username: null,
 
   }),
+  methods:{
+    toLogin() {
+      this.$router.push({name: 'login'})
+    },
+    toCadastro() {
+      this.$router.push({name: 'cadastro'})
+    },
+    toUserHome() {
+      this.$router.push({path: '/'})
+    }
+  },
   computed: {
-    ...mapGetters(['getIsLoggedIn','getUsername']),
+    ...mapGetters(['getIsLoggedIn','getUser']),
     loggedIn() {
       this.isLoggedIn = getIsLoggedIn
     },

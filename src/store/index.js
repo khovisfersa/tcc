@@ -10,6 +10,8 @@ export default new Vuex.Store({
     isLoggedIn: false,
     isAdmin: false,
     isConteudista: false,
+    user_id: null,
+    grupo_id: null,
   },
   getters: {
     getUserToken(state) {
@@ -26,17 +28,38 @@ export default new Vuex.Store({
     },
     getIsConteudista(state, getters) {
       return state.isConteudista
+    },
+    getUserId(state, getters) {
+      return state.user_id
+    },
+    getGrupoId(state, getters) {
+      return state.grupo_id
     }
   },
   mutations: {
     // na hora de usar, tem que fazer o chamado da api e, dentor da promessa, no then, chamar essa mutation
     // pq não pode ter nada assíncrono dentro da mutation
-    mutationLogin(state, user_name) {
+    setLogin(state) {
       state.isLoggedIn = true
-      state.user = user_name
+      // state.user = user_name
     },
     setToken(state, token) {
       state.token = token
+    },
+    setUser(state, username) {
+      state.user = username
+    },
+    setIsAdmin(state, admin) {
+      state.isAdmin = admin
+    },
+    setIsConteudista(state, conteudista) {
+      state.isConteudista = conteudista
+    },
+    setUserId(state, user_id) {
+      state.user_id = user_id
+    },
+    setGrupoId(state, grupo_id) {
+      state.grupo_id = grupo_id
     }
   },
   actions: {

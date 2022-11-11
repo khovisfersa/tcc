@@ -1,27 +1,27 @@
-<template>
+ <template>
 	<v-container>
 		<v-card class="mx-auto px-5 py-5">
-			<v-card-title>{{ tarefa1.titulo }}</v-card-title>
+			<v-card-title>{{ tarefa1.title }}</v-card-title>
 			<v-card-subtitle>{{ tarefa1.nivel }}</v-card-subtitle>
 			<v-divider></v-divider>
 			<v-card-text >
 				<v-container>
-					{{ tarefa1.texto }}
+					{{ tarefa1.text }}
 				</v-container>
 				<v-divider></v-divider>
 				<v-container>
 					<h3>
-						Partes em aberto: {{mostrar_card_resposta}}
+						Partes em aberto: {{ mostrar_card_resposta }}
 					</h3>
 					<v-row>
 						<v-col cols=3>
 							<v-list>
 								<v-list-item v-for="item in total_partes" :key="item">
-									<v-list-item-title v-if="faltantes.includes(item)">
-										<v-btn class="secondary" @click="responder(item)">{{ item }}</v-btn>
+									<v-list-item-title v-if="resposta1.includes(item)">
+										<v-btn disabled>{{ item }}</v-btn>
 									</v-list-item-title>
 									<v-list-item-title v-else>
-										<v-btn disabled>{{ item }}</v-btn>
+										<v-btn class="secondary" @click="responder(item)">{{ item }}</v-btn>										
 									</v-list-item-title>
 								</v-list-item>
 							</v-list>
@@ -29,12 +29,13 @@
 						<v-col cols=9>
 							<v-card v-if="mostrar_card_resposta">
 								<v-card-title>Responder item {{ identificador }}</v-card-title>
-								<v-card-subtitle><a href="https://online-voice-recorder.com/pt/" target="_blank">Link para um lugar para gravar os audios</a></v-card-subtitle>
+								
 								<v-card-text v-if="tarefa1.tipo === 'texto'">
-									<v-textarea class="px-5" :label='"resposta ao item "+ nova_resposta.identificador' v-model="nova_resposta.texto" auto-grow outlined name="resposta_texto"></v-textarea>
+									<v-textarea class="px-5" :label='"resposta ao item "+ nova_resposta.identificador' v-model="texto" auto-grow outlined name="resposta_texto"></v-textarea>
 								</v-card-text>
 								<v-card-text v-if="tarefa1.tipo === 'audio'">
 					        <!-- <VueRecordAudio mode="press" @result="onResult" />	 -->
+					        <v-card-subtitle><a href="https://online-voice-recorder.com/pt/" target="_blank">Link para um lugar para gravar os audios</a></v-card-subtitle>
 					        <v-form>
 						        <v-file-input accept=".mp3"  show-size v-model="file" label="Selecione o arquivo"/>
 						       </v-form>
@@ -62,68 +63,72 @@ import { getUserId } from '../store/function.js'
 
 	export default {
 		name: "tarefa_ativa",
-		props:{
-			tarefa: {},
-			resposta: {}
-		},
 		data(){
 			return {
 				faltantes: [],
+				tarefa_id: null,
+				texto: '',
 				nova_resposta: {},
 				data: null,
 				file: null,
 				identificador: null,
-				link: "http://15.228.46.82:3333",
-				// link: "http://localhost:3333",
+				// link: "https://lfstcc.click",
 				mostrar_card_resposta: false,
 				total_partes: [1,2,3,4,5],
 				showDialog: false,
-				tarefa1: { 
-					titulo: "El premiero teste", 
-					nivel: "A2",
-					texto: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut laoreet mi. Suspendisse potenti. Maecenas eu mattis lectus, id gravida libero. Morbi sit amet molestie libero. Nulla aliquam, felis eget interdum pharetra, nulla libero ornare enim, in imperdiet sem massa eget nulla. Aliquam libero turpis, porta at ullamcorper at, semper nec velit. Phasellus vel faucibus nibh, ut facilisis justo.
-						Nunc tincidunt arcu in purus scelerisque euismod. Nunc sollicitudin porta tempor. Nunc tempus suscipit libero, vitae cursus velit blandit a. Morbi pharetra sapien eu justo sagittis, id dapibus ante convallis. Donec vitae turpis pulvinar justo viverra molestie a id eros. Sed cursus, erat at dapibus lobortis, erat sem imperdiet nulla, et tincidunt justo nunc eu lacus. Cras eget purus euismod, dictum erat ac, hendrerit mi. Proin accumsan porta risus ut maximus. Donec lacinia libero quis libero porttitor fringilla.`,
-						tipo: "audio",
-				},
-				resposta1:[
-				{
-					usuario_id: 1,
-					grupo_id: 1,
-					tarefa_id: 1,
-					identificador: 1,
-					filepath:'/'
-				},
-				{
-					usuario_id: 1,
-					grupo_id: 1,
-					tarefa_id: 1,
-					identificador: 2,
-					filepath:'/'
-				},
-				{
-					usuario_id: 1,
-					grupo_id: 1,
-					tarefa_id: 1,
-					identificador: 5,
-					filepath:'/'
-				},
-				],
+				tarefa1: {},
+				resposta1:[],
 
 			}
 		},
 		created() {
-			this.getDone(this.resposta1);
+			this.getTarefaInformation(localStorage.grupo_id);
+			// this.getDone(this.resposta1);
 			// this.$store.getters.
+
+		},
+		mounted() {
+			this.getDone(resposta1)
 		},
 		computed: {
-			...mapGetters['getToken']
+			...mapGetters(['getToken'])
+			// this.getDone(this.resposta1)
 		},
 		methods:{
-			// ...mapMutations(['setToken']),
+			...mapMutations(['setToken']),
+			async getTarefaInformation(grupo_id){
+				//get tarefa ativa (enunciado, etc...)
+				axios.get('/tarefa_ativa/' + grupo_id)
+				.then((res) => {
+					this.tarefa1 = res.data.tarefa_info
+					console.log(res.data.identificadores)
+					this.resposta1 = res.data.identificadores
+				})
+				this.getTarefaBase()
+				//get respostas da tarefa ativa
+			},
+			async getTarefaBase(tarefa_id) {
+				axios.get(this.$api + '/tarefa/' + tarefa_id, (req,res) => {
+
+				})
+				.then(res => {
+					this.tarefa1.titulo = res.data.title
+					this.tarefa1.nivel = res.data.nivel
+					this.tarefa1.texto = res.data.text
+					this.tarefa1.rubrica = res.data.rubrica
+					this.tarefa1.tipo = res.data.tipo
+				})
+				.catch(err => {
+					console.log(err)
+				})
+			},
 			getDone(resposta) {
+				console.log("get done")
 				let complete = [1,2,3,4,5]
+				alert(resposta)
 				resposta.forEach((e) => {
-					complete.splice(complete.indexOf(e.identificador),1)
+					console.log("entrou no loop")
+					complete.splice(complete.indexOf(e),1)
 				})
 				this.faltantes = complete
 			},
@@ -133,8 +138,25 @@ import { getUserId } from '../store/function.js'
 				this.nova_resposta.identificador = item
 				if(this.tarefa1.tipo === "texto") this.nova_resposta.texto = "";
 			},
-			enviarResposta(value) {
-				alert(value)
+			async enviarResposta(value) {
+
+				let resposta_info = {
+					tarefa_id: this.tarefa1.tarefa_id,
+					grupo_id: localStorage.grupo_id,
+					usuario_id: localStorage.usuario_id,
+					identificador: this.identificador,
+					text: this.texto
+				}
+
+				console.log(resposta_info)
+
+				await axios.post(this.$api + "/create_resposta", resposta_info)
+				.then((res) => {
+					alert("resposta enviada com sucesso")
+				})
+				.catch((err) => {
+					alert("erro! " + err)
+				})
 			},
 			callback(msg){
 				console.log(msg)
@@ -149,7 +171,7 @@ import { getUserId } from '../store/function.js'
 					this.onDeny()
 				}
 			},
-			onAccept() {
+			async onAccept() {
 				// let url = '....'
 
 				// getUserId()
@@ -160,7 +182,10 @@ import { getUserId } from '../store/function.js'
 				data.append('name', 'audio')
 				data.append('file', this.file)
 				data.append('filename', this.identificador+"-2-1")
-				// data.append('user_id', )
+				// data.append('grupo_id', this.grupo_id)
+				// data.append('user_id', this.user_id)
+				// data.append('tarefa_id', this.tarefa_id)
+				// data.append('identificador', this.identificador)
 
 				let user_id = getUserId(token)
 
@@ -173,7 +198,7 @@ import { getUserId } from '../store/function.js'
 
 				// console.log(config)
 
-				axios.post(this.link + '/upload_audio', data, config)
+				await axios.post(this.$api + '/upload_audio', data, config)
 				.then(() => {
 					console.log("deu bom!")
 					this.file = '' 

@@ -43,7 +43,7 @@
 				            Tarefa em aberto
 				          </v-list-item-title>
 				          <v-list-item-subtitle>
-				            <router-link to="/">{{ ativa.titulo }}</router-link>
+				            <v-btn @click="goToTarefaAtiva">{{ ativa.titulo }}</v-btn>
 				          </v-list-item-subtitle>
 				        </v-list-item-content>
 				      </v-list-item>
@@ -75,11 +75,17 @@
 </template>
 
 <script>
+	import axios from 'axios';
+
 	export default {
 		name: "grupo",
 
 		data() {
 			return {
+				// grupo: {},
+				// ativa: {},
+				// feitas:[],
+				// usuarios:[],
 				grupo: {
 					nome: "Senatus Deorum",
 					partic: 5,
@@ -99,7 +105,8 @@
 					{titulo:"Segudna", nivel:"B2", nota: 10},
 					{titulo:"Terceira", nivel:"C1", nota: 10},
 					{titulo:"Quarta", nivel:"C2", nota: 10},
-				]
+				],
+				usuarios:[]
 			}
 		},
 		created() {
@@ -107,11 +114,26 @@
 		},
 		methods: {
 			async getGroupInfo(id) {
-				return 0
+				await this.axios.get(this.$api + '/get_grupo_by_id/' + id)
+				.then((res) => {
+					console.log('TESTEEEEEEEEEEEEE')
+					console.log(res)
+					this.grupo = res.data.grupo_info
+					this.feitas = res.data.feitos
+					this.ativa = res.data.aberto
+					this.usuarios = res.data.users
+				})
+				.catch((err) => {
+					console.log(err)
+				})
+
 			},
 			async getTarefaAtiva(){
 				return 0
-			}
+			},
+			goToTarefaAtiva() {
+				this.$router.push({ name: 'tarefa_ativa' })
+			},
 		}
 	}
 
