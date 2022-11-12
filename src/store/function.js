@@ -1,6 +1,8 @@
 import store from '../store'
 import axios from 'axios'
 
+let api = "https://lfstcc.click"
+
 export async function getUserInfo(token) {
 	let config = {
 		headers: {
@@ -9,7 +11,8 @@ export async function getUserInfo(token) {
 		}
 	}
 	console.log("getUserInfo")
-	await axios.get(this.$api + '/user_info', config)
+	console.log(api)
+	await axios.get(api + '/user_info', config)
 	.then((res) => {
 		console.log("res: ")
 		console.log(res.data)
