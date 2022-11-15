@@ -44,7 +44,9 @@
 				            Tarefa em aberto
 				          </v-list-item-title>
 				          <v-list-item-subtitle>
-				            <v-btn @click="goToTarefaAtiva">{{ ativa.titulo }}</v-btn>
+				          	{{ ativa.titulo }}
+				            <v-btn @click="goToTarefaAtiva" label="visitar"></v-btn>
+				          	}
 				          </v-list-item-subtitle>
 				        </v-list-item-content>
 				      </v-list-item>
