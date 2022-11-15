@@ -1,5 +1,5 @@
-// import store from '../store'
-import store from '@/store'
+import store from '../store'
+// import store from '@/store'
 import axios from 'axios'
 
 let api = "https://lfstcc.click"
