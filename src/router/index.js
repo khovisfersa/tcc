@@ -99,6 +99,16 @@ const routes = [
     path: '/grupo/:id/tarefa_ativa',
     name: "tarefa_ativa",
     component: TarefaAtiva
+  },
+  {
+    path: '/grupo/:grupo_id/:tarefa_id',
+    name: "tarefa_completa",
+    component: TarefaCompleta
+  },
+  {
+    path: '*',
+    name : "escape",
+    component: HomeView
   }
 ]
 

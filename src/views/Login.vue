@@ -47,7 +47,7 @@ export default {
     source: String,
   },
   data: () => ({
-      api: "https://lfstcc.click",
+      // api: "https://lfstcc.click",
       username: '',
       password: '',
     }),

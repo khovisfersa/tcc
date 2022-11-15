@@ -5,6 +5,7 @@
 		</v-row>
 		<!-- <v-divider></v-divider> -->
 		<v-container>
+			<h2>Tarefas completas</h2>
 			<v-row>
 				<v-col cols=8>
 					<v-container fluid>
@@ -26,7 +27,7 @@
 			              <v-spacer></v-spacer>
 
 			        			<v-btn color="secondary" @click="goToGroup(card.id)">
-			        				Ver grupo
+			        				Ver resposta
 			        			</v-btn>
 			            </v-card-actions>
 			          </v-card>
@@ -47,10 +48,9 @@
 				          </v-list-item-subtitle>
 				        </v-list-item-content>
 				      </v-list-item>
-
 				      <v-divider></v-divider>
-				      <p class="mx-auto">Partes em aberto</p>
-				      <v-list dense nav>
+				      <!-- <p class="mx-auto">Partes em aberto</p> -->
+				      <!-- <v-list dense nav>
 				        <v-list-item v-for="open in ativa.partes.abertas" :key="open" link>
 				          <v-list-item-icon>
 				            <v-icon>{{ open }}</v-icon>
@@ -65,7 +65,7 @@
 				            <v-icon>{{ done }}</v-icon>
 				          </v-list-item-icon>
 				        </v-list-item>
-				      </v-list>
+				      </v-list> -->
 				    </v-navigation-drawer>
 				  </v-card>
 				</v-col>
@@ -86,6 +86,7 @@
 				// ativa: {},
 				// feitas:[],
 				// usuarios:[],
+				//////////////////////////////////////////////////////////////////
 				grupo: {
 					nome: "Senatus Deorum",
 					partic: 5,

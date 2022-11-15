@@ -1,4 +1,5 @@
-import store from '../store'
+// import store from '../store'
+import store from '@/store'
 import axios from 'axios'
 
 let api = "https://lfstcc.click"
@@ -10,12 +11,8 @@ export async function getUserInfo(token) {
 			'x-access-token' : token
 		}
 	}
-	console.log("getUserInfo")
-	console.log(api)
 	await axios.get(api + '/user_info', config)
 	.then((res) => {
-		console.log("res: ")
-		console.log(res.data)
 		store.commit('setToken', res.data.token)
 		store.commit('setUser', res.data.username)
 		store.commit('setIsAdmin',res.data.isadmin)

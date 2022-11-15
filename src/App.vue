@@ -8,12 +8,13 @@
       <div class="d-flex justify-center">
         <v-row v-if="!isLoggedIn">
           <v-col>
-            <v-btn v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toLogin" >Login</v-btn>
-            <v-btn v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserHome" >{{ getUser }}</v-btn>
+            <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toLogin" >Login</v-btn>
+            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserHome" >{{ getUser }}</v-btn>
+            
           </v-col>
           <v-col>
-            <v-btn v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toCadastro">Cadastro</v-btn>
-
+            <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toCadastro">Cadastro</v-btn>
+            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserGroup" > Grupo</v-btn>
           </v-col>
         </v-row>
         <v-row v-else>
@@ -37,6 +38,7 @@ export default {
   data: () => ({
     isLoggedIn: false,
     username: null,
+    grupo_id: null,
 
   }),
   methods:{
@@ -48,15 +50,21 @@ export default {
     },
     toUserHome() {
       this.$router.push({path: '/'})
+    },
+    toUserGroup() {
+      this.$router.push({path: '/grupo/' + this.$store.getters.getGrupoId})
     }
   },
   computed: {
-    ...mapGetters(['getIsLoggedIn','getUser']),
+    ...mapGetters(['getIsLoggedIn','getUser', 'getGrupoId']),
     loggedIn() {
       this.isLoggedIn = getIsLoggedIn
     },
     getUsername() {
       this.username = getUsername
+    },
+    GrupoId() {
+      return this.$store.getters.getGrupoId
     }
 
   }

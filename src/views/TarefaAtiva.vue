@@ -77,17 +77,18 @@ import { getUserId } from '../store/function.js'
 				total_partes: [1,2,3,4,5],
 				showDialog: false,
 				tarefa1: {},
-				resposta1:[],
+				resposta1:{},
 
 			}
 		},
 		created() {
-			this.getTarefaInformation(localStorage.grupo_id);
+			// this.getTarefaInformation(localStorage.grupo_id);
 			// this.getDone(this.resposta1);
 			// this.$store.getters.
 
 		},
 		mounted() {
+			this.getTarefaInformation(localStorage.grupo_id);
 			this.getDone(resposta1)
 		},
 		computed: {
@@ -98,20 +99,24 @@ import { getUserId } from '../store/function.js'
 			...mapMutations(['setToken']),
 			async getTarefaInformation(grupo_id){
 				//get tarefa ativa (enunciado, etc...)
-				axios.get('/tarefa_ativa/' + grupo_id)
+				await axios.get('/tarefa_ativa/' + grupo_id)
 				.then((res) => {
 					this.tarefa1 = res.data.tarefa_info
-					console.log(res.data.identificadores)
+					console.log(this.tarefa1)
 					this.resposta1 = res.data.identificadores
 				})
-				this.getTarefaBase()
+				this.getTarefaBase(this.tarefa1.tarefa_id)
 				//get respostas da tarefa ativa
 			},
 			async getTarefaBase(tarefa_id) {
-				axios.get(this.$api + '/tarefa/' + tarefa_id, (req,res) => {
-
-				})
-				.then(res => {
+				let config = {
+					header: {
+						'Content-Type' : 'multipart/form-data',
+						'x-access-token' : localStorage.token
+					}
+				}
+				await axios.get(this.$api + '/tarefa/' + tarefa_id)
+				.then((res) => {
 					this.tarefa1.titulo = res.data.title
 					this.tarefa1.nivel = res.data.nivel
 					this.tarefa1.texto = res.data.text
