@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="background-color: #D8CEE0">
     <v-app-bar app color="primary" dark>
       <div class="d-flex justify-center">
         <v-btn color="secondary" to="/home">Inicial</v-btn>
@@ -9,7 +9,7 @@
         <v-row v-if="!isLoggedIn">
           <v-col>
             <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toLogin" >Login</v-btn>
-            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserHome" >{{ getUser }}</v-btn>
+            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" >{{ getUser }}</v-btn>
             
           </v-col>
           <v-col>
@@ -23,7 +23,7 @@
       </div>
     </v-app-bar>
 
-    <v-main>
+    <v-main :styles="{background: $vuetify.theme.themes.light.background}">
       <router-view />
     </v-main>
   </v-app>
@@ -31,9 +31,11 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import vuetify from "@/plugins/vuetify.js"
 
 export default {
   name: "App",
+
 
   data: () => ({
     isLoggedIn: false,
@@ -52,7 +54,14 @@ export default {
       this.$router.push({path: '/'})
     },
     toUserGroup() {
-      this.$router.push({path: '/grupo/' + this.$store.getters.getGrupoId})
+      // alert(this.$store.getters.getGrupoId)
+      if(this.$store.getters.getGrupoId == 0 || this.$store.getters.getGrupoId == null ) {
+        this.$router.push({path: '/semgrupo'})
+      }
+      else {
+  
+        this.$router.push({path: '/grupo/' + this.$store.getters.getGrupoId})
+      }
     }
   },
   computed: {

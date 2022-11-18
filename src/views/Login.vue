@@ -55,7 +55,7 @@ export default {
     ...mapGetters(['getUserToken', 'getUser'])
   },
   methods: {
-    ...mapMutations(['setToken', 'setUser', 'setIsAdmin', 'setIsConteudista']),
+    ...mapMutations(['setToken', 'setUser', 'setIsAdmin', 'setIsConteudista', 'setUserId', 'setGrupoId']),
     async login() {
       let user_info = {
         username: this.username,
@@ -72,6 +72,8 @@ export default {
         this.setUser(res.data.username)
         this.setIsAdmin(res.data.isadmin)
         this.setIsConteudista(res.data.isconteudista)
+        this.setUserId(res.data.usuario_id)
+        this.setGrupoId(res.data.grupo_id)
         this.$router.push('/')
       })
       .catch((err) => {

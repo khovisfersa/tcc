@@ -11,19 +11,59 @@ export async function getUserInfo(token) {
 			'x-access-token' : token
 		}
 	}
-	await axios.get(api + '/user_info', config)
-	.then((res) => {
-		store.commit('setToken', res.data.token)
-		store.commit('setUser', res.data.username)
-		store.commit('setIsAdmin',res.data.isadmin)
-		store.commit('setIsConteudista',res.data.isconteudista)
-		store.commit('setUserId', res.data.user_id)
-		store.commit('setGrupoId', res.data.grupo_id)
-	})
-	.catch((err) => {
-		console.log(err)
-	})
+	return await axios.get(api + '/user_info', config)
+	// .then((res) => {
+	// 	store.commit('setToken', res.data.token)
+	// 	store.commit('setUser', res.data.username)
+	// 	store.commit('setIsAdmin',res.data.isadmin)
+	// 	store.commit('setIsConteudista',res.data.isconteudista)
+	// 	store.commit('setUserId', res.data.user_id)
+	// 	store.commit('setGrupoId', res.data.grupo_id)
+
+	// })
+	// .catch((err) => {
+	// 	store.commit('setToken', null )
+	// 	store.commit('setUser', null )
+	// 	store.commit('setIsAdmin', null )
+	// 	store.commit('setIsConteudista', null )
+	// 	store.commit('setUserId', null )
+	// 	store.commit('setGrupoId', null )
+
+	// 	localStorage.token = null
+	// 	console.log(err)
+	// })
 }
+
+// export async function getUserInfo(token) {
+// 	let config = {
+// 		headers: {
+// 			'Content-Type' : 'multipart/form-data',
+// 			'x-access-token' : token
+// 		}
+// 	}
+// 	await axios.get(api + '/user_info', config)
+// 	.then((res) => {
+// 		store.commit('setToken', res.data.token)
+// 		store.commit('setUser', res.data.username)
+// 		store.commit('setIsAdmin',res.data.isadmin)
+// 		store.commit('setIsConteudista',res.data.isconteudista)
+// 		store.commit('setUserId', res.data.user_id)
+// 		store.commit('setGrupoId', res.data.grupo_id)
+
+// 	})
+// 	.catch((err) => {
+// 		store.commit('setToken', null )
+// 		store.commit('setUser', null )
+// 		store.commit('setIsAdmin', null )
+// 		store.commit('setIsConteudista', null )
+// 		store.commit('setUserId', null )
+// 		store.commit('setGrupoId', null )
+
+// 		localStorage.token = null
+// 		console.log(err)
+// 	})
+// }
+
 
 export async function getUserId (token) {
 	let config = {

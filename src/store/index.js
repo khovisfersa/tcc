@@ -39,8 +39,15 @@ export default new Vuex.Store({
   mutations: {
     // na hora de usar, tem que fazer o chamado da api e, dentor da promessa, no then, chamar essa mutation
     // pq não pode ter nada assíncrono dentro da mutation
-    setLogin(state) {
-      state.isLoggedIn = true
+    setLogin(state, isIt) {
+      state.isLoggedIn = isIt
+      if(!isIt) {
+        state.token = null
+        state.isAdmin = false
+        state.isConteudista = false
+        state.user_id = null
+        state.grupo_id = 0
+      }
       // state.user = user_name
     },
     setToken(state, token) {

@@ -72,7 +72,6 @@ import { getUserId } from '../store/function.js'
 				data: null,
 				file: null,
 				identificador: null,
-				// link: "https://lfstcc.click",
 				mostrar_card_resposta: false,
 				total_partes: [1,2,3,4,5],
 				showDialog: false,
@@ -89,17 +88,17 @@ import { getUserId } from '../store/function.js'
 		},
 		mounted() {
 			this.getTarefaInformation(localStorage.grupo_id);
-			this.getDone(resposta1)
+			// this.getDone(this.resposta1)
 		},
 		computed: {
-			...mapGetters(['getToken'])
+			...mapGetters(['getToken', 'getUserId', 'getGrupoId'])
 			// this.getDone(this.resposta1)
 		},
 		methods:{
 			...mapMutations(['setToken']),
 			async getTarefaInformation(grupo_id){
 				//get tarefa ativa (enunciado, etc...)
-				await axios.get('/tarefa_ativa/' + grupo_id)
+				await axios.get(this.$api + '/tarefa_ativa/' + grupo_id)
 				.then((res) => {
 					this.tarefa1 = res.data.tarefa_info
 					console.log(this.tarefa1)
@@ -130,7 +129,7 @@ import { getUserId } from '../store/function.js'
 			getDone(resposta) {
 				console.log("get done")
 				let complete = [1,2,3,4,5]
-				alert(resposta)
+				// alert(resposta)
 				resposta.forEach((e) => {
 					console.log("entrou no loop")
 					complete.splice(complete.indexOf(e),1)
@@ -143,6 +142,8 @@ import { getUserId } from '../store/function.js'
 				this.nova_resposta.identificador = item
 				if(this.tarefa1.tipo === "texto") this.nova_resposta.texto = "";
 			},
+
+
 			async enviarResposta(value) {
 
 				let resposta_info = {
@@ -163,9 +164,8 @@ import { getUserId } from '../store/function.js'
 					alert("erro! " + err)
 				})
 			},
-			callback(msg){
-				console.log(msg)
-			},
+
+
 			onResult(data) {
 				console.log("AAAAAA")
 				this.data = data
@@ -176,6 +176,8 @@ import { getUserId } from '../store/function.js'
 					this.onDeny()
 				}
 			},
+
+
 			async onAccept() {
 				// let url = '....'
 
@@ -186,18 +188,19 @@ import { getUserId } from '../store/function.js'
 
 				data.append('name', 'audio')
 				data.append('file', this.file)
-				data.append('filename', this.identificador+"-2-1")
-				// data.append('grupo_id', this.grupo_id)
-				// data.append('user_id', this.user_id)
-				// data.append('tarefa_id', this.tarefa_id)
-				// data.append('identificador', this.identificador)
+				data.append('grupo_id', localStorage.grupo_id)
+				data.append('usuario_id', localStorage.usuario_id)
+				data.append('tarefa_id', this.tarefa1.tarefa_id)
+				data.append('identificador', this.identificador)
 
-				let user_id = getUserId(token)
+				let user_id = localStorage.usuario_id
 
 				let config = {
 					header: {
 						'Content-Type' : 'multipart/form-data',
-						'x-access-token' : localStorage.token
+						'x-access-token' : localStorage.token,
+						'grupo_id' : this.grupo_id,
+						'user_id' : this.usuario_id
 					}
 				}
 
@@ -207,27 +210,15 @@ import { getUserId } from '../store/function.js'
 				.then(() => {
 					console.log("deu bom!")
 					this.file = '' 
+					this.$router.go()
 				})
 				.catch(err => {
 					console.log(err)
 					console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 				})
-
-				// try {
-				// 	axios.post('http://15.228.46.82:3333/upload_audio', {
-				// 		file: this.data
-				// 	})
-				// 	.then( (res) => {
-				// 		// alert(res)
-				// 		console.log(this.data)
-				// 	})
-				// 	.catch( (err) => {
-				// 		console.log(err)
-				// 	})
-				// } catch(err) {
-
-				// }
 			},
+
+
 			onDeny() {
 				// this.showDialog = false
 				this.data = null
