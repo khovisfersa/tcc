@@ -13,8 +13,8 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
-// Vue.prototype.$api = "https://lfstcc.click"
-Vue.prototype.$api = "http://localhost:3333"
+Vue.prototype.$api = "https://lfstcc.click"
+// Vue.prototype.$api = "http://localhost:3333"
 
 
 new Vue({
