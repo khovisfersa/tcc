@@ -21,7 +21,7 @@
 						<v-row v-else dense>
 							<v-col v-for="card in feitas" :key="card.title" :cols="4">
 								<v-card elevation="10">
-			             <v-card-title v-text="'Atividade: ' + card.title"></v-card-title>
+			             <v-card-title v-text="card.title"></v-card-title>
 			             <v-card-text>
 			             	<p>
 			             		nivel: {{card.nivel}}
@@ -157,6 +157,7 @@
 			goToTarefa(grupo_id, tarefa_id) {
 				console.log("grupo: " + grupo_id)
 				console.log("tarefa: " + tarefa_id)
+				this.$router.push({path:'/tarefa/' + grupo_id + '/' + tarefa_id})
 			}
 		}
 	}

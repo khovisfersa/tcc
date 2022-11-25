@@ -111,7 +111,7 @@ const routes = [
     }
   },
   {
-    path: '/grupo/:grupo_id/:tarefa_id',
+    path: '/tarefa/:grupo_id/:tarefa_id',
     name: "tarefa_completa",
     meta: {auth: true},
     component: TarefaCompleta,

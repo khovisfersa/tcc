@@ -2,14 +2,16 @@
   <v-app style="background-color: #D8CEE0">
     <v-app-bar app color="primary" dark>
       <div class="d-flex justify-center">
-        <v-btn color="secondary" to="/home">Inicial</v-btn>
+        <v-btn color="secondary" to="/home">Home</v-btn>
       </div>
+      <v-spacer></v-spacer>
+      <h1>Panglottai</h1>
       <v-spacer></v-spacer>
       <div class="d-flex justify-center">
         <v-row v-if="!isLoggedIn">
           <v-col>
             <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toLogin" >Login</v-btn>
-            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" >{{ getUser }}</v-btn>
+            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" elevation="0" color="transparent" >{{ getUser }}</v-btn>
             
           </v-col>
           <v-col>

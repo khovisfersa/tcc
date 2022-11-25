@@ -1,6 +1,7 @@
 <template>
 <v-container>
 	<v-container>
+		<v-card> <v-card-title>{{ nome_grupo }}</v-card-title> </v-card>
 		<v-card>
 			<v-card-title>
 				<h2> Tarefa: {{ tarefa.title }}</h2>
@@ -120,6 +121,7 @@ export default{
 			isMine: false,
 			comented: false,
 			tarefa:{},
+			nome_grupo: '',
 			nota: [0,0,0,0,0],
 			comentario: '',
 			respostas_texto:[],
@@ -143,6 +145,7 @@ export default{
 		await this.getRespostaTexto()
 		await this.jaComentei()
 		await this.getAvaliacoes()
+		await this.getGrupoName(this.$route.params.grupo_id)
 		this.isThisMine()
 	},
 	mounted:{},
@@ -236,7 +239,15 @@ export default{
 			})
 		},
 
-
+		async getGrupoName(id) {
+			await axios.get(this.$api + '/nome/' + id)
+			.then((res) => {
+				this.nome_grupo = res.data
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+		}
 	}
 }
 </script>
