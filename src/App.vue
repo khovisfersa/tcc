@@ -17,6 +17,7 @@
           <v-col>
             <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toCadastro">Cadastro</v-btn>
             <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserGroup" >Grupo</v-btn>
+            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="logout()" >Logout</v-btn>
           </v-col>
         </v-row>
         <v-row v-else>
@@ -61,6 +62,10 @@ export default {
       this.$router.push({name: 'cadastro'})
     },
     toUserHome() {
+      this.$router.push({path: '/'})
+    },
+    logout() {
+      localStorage.clear()
       this.$router.push({path: '/'})
     },
     toUserGroup() {

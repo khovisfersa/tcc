@@ -2,7 +2,7 @@
 	<v-container>
 		<v-card class="mx-auto px-5 py-5">
 			<v-card-title>{{ tarefa1.title }}</v-card-title>
-			<v-card-subtitle>{{ tarefa1.nivel }}</v-card-subtitle>
+			<v-card-subtitle>nivel: {{ tarefa1.nivel }}</v-card-subtitle>
 			<v-divider></v-divider>
 			<v-card-text >
 				<v-container>
@@ -10,9 +10,6 @@
 				</v-container>
 				<v-divider></v-divider>
 				<v-container>
-					<h3>
-						Partes em aberto: {{ mostrar_card_resposta }}
-					</h3>
 					<v-row>
 						<v-col cols=3>
 							<v-list>

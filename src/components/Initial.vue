@@ -10,7 +10,7 @@
             <v-row class="mt-10"> Depois de entrar em um grupo, Você e seu grupo receberão tarefas no idioma a ser aprendido. Essas tarefas lhe farão aprender mais sobre o idioma.</v-row>
             <v-row class="mt-10">Quando tiver usado a aplicação o suficiente, por favor, responda à pesquisa a seguir!</v-row>
     
-            <v-row class="mt-10"><a href="https://forms.gle/jEABN2ztFo9tujsT6">PESQUISA</a></v-row>
+            <v-row class="mt-10"><a href="https://forms.gle/ELiEQNBmfcTTX95R8">PESQUISA</a></v-row>
           </v-card-text>
         </div>
       </v-card>
