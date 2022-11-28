@@ -16,7 +16,7 @@
           </v-col>
           <v-col>
             <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toCadastro">Cadastro</v-btn>
-            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserGroup" > Grupo</v-btn>
+            <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserGroup" >Grupo</v-btn>
           </v-col>
         </v-row>
         <v-row v-else>
@@ -49,6 +49,14 @@ export default {
     toLogin() {
       this.$router.push({name: 'login'})
     },
+    getIslogged() {
+      if(localStorage.getItem(token) != '') {
+        this.username = localStorage.getItem(username)
+        this.grupo_id = localStorage.getItem(grupo_id)
+        return true
+      }
+      else return false
+    },
     toCadastro() {
       this.$router.push({name: 'cadastro'})
     },
@@ -72,7 +80,7 @@ export default {
       this.isLoggedIn = getIsLoggedIn
     },
     getUsername() {
-      this.username = getUsername
+      this.username = this.$store.getters.getUsername
     },
     GrupoId() {
       return this.$store.getters.getGrupoId

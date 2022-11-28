@@ -22,20 +22,20 @@ export default {
 		}
 	},
 	methods:{ 
-		getAudioByName() {
-			// pegar cada elemento de uma resposta no servidor, seja de áudio ou de texto
-			axios.get('/audio_by_name/4-2-1')
-			.then((req,res) => {
-				return res.data
-			})
-			.catch((err) => {
-				console.log("err: " + err)
-			})
-		},
+		// getAudioByName() {
+		// 	// pegar cada elemento de uma resposta no servidor, seja de áudio ou de texto
+		// 	axios.get('/audio_by_name/4-2-1')
+		// 	.then((req,res) => {
+		// 		return res.data
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log("err: " + err)
+		// 	})
+		// },
 
-		getRespostaContent() {
-			axios.get('')
-		}
+		// getRespostaContent() {
+		// 	axios.get('')
+		// }
 	}
 }	
 </script>

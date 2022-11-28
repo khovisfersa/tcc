@@ -71,7 +71,7 @@ const routes = [
     beforeEnter: (to,from,next) => {
       console.log(store.getters.getToken)
       if(store.getters.getToken){
-        next({name: "l-home"})
+        next({name: "home"})
       }
       else {
         // next({name: "login"})
@@ -169,6 +169,7 @@ const router = new VueRouter({
 
 const guard = async function(to,from,next, token) {
   console.log(token)
+  console.log(localStorage.token)
   await getUserInfo(localStorage.token)
   .then((res) => {
     store.commit('setToken', res.data.token)
@@ -180,6 +181,7 @@ const guard = async function(to,from,next, token) {
     next()
   })
   .catch((err) => {
+    console.log("login deu false")
     store.commit('setLogin',false)
     next({path: '/login'})
   })
@@ -206,32 +208,5 @@ const guard = async function(to,from,next, token) {
   // })
 }
 
-// router.beforeEach(async (to,from, next) => {
-//   console.log("before each")
-//   if(to.meta.auth == true) {
-//     try {
-//       let token = localStorage.getToken
-//       await getUserInfo(token)
-//       .then((res) => {
-//         console.log(res)
-//       })
-
-//       next()
-//     } catch(err) {
-//       console.log("erro")
-//       next({path: '/home'})  
-//     }
-//   }
-//   else {
-//     next()
-//   }
-// })
-
-
-
-// router.afterEach((to,from) => {
-// router.afterEach(() => {
-//   console.log("after each")
-// })
 
 export default router

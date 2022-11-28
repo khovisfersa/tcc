@@ -93,24 +93,6 @@
 				ativa: {},
 				feitas:[],
 				usuarios:[],
-				//////////////////////////////////////////////////////////////
-				// grupo: {
-				// 	// nome: "Senatus Deorum",
-				// 	// partic: 5,
-				// 	// nivel: "C1",
-				// 	// tarefas_recebidas: 5,
-				// 	// tarefas_completas: 3
-				// },
-				// ativa: {
-				// 	// titulo: "teste",
-				// },
-				// feitas:[
-				// 	// {titulo:"Primeira", nivel:"B1", nota: 10},
-				// 	// {titulo:"Segudna", nivel:"B2", nota: 10},
-				// 	// {titulo:"Terceira", nivel:"C1", nota: 10},
-				// 	// {titulo:"Quarta", nivel:"C2", nota: 10},
-				// ],
-				// usuarios:[]
 			}
 		},
 		created() {
