@@ -17,6 +17,8 @@
           <v-col>
             <v-btn rounded v-if="!getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toCadastro">Cadastro</v-btn>
             <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="toUserGroup" >Grupo</v-btn>
+          </v-col>
+          <v-col>
             <v-btn rounded v-if="getIsLoggedIn" justify="space-bewteen" color="secondary" @click="logout()" >Logout</v-btn>
           </v-col>
         </v-row>
