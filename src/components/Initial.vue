@@ -20,7 +20,7 @@
           <v-col
             v-for="card in tarefas"
             :key="card.title"
-            :cols="6"
+            :cols="4"
           >
             <v-card elevation="10" width="300">
                <v-card-title v-text="card.nome"></v-card-title>
