@@ -25,10 +25,11 @@
             <v-card elevation="10" width="300">
                <v-card-title v-text="card.nome"></v-card-title>
                <v-card-subtitle>
-                 <p>Atividade nivel  {{ card.nivel }} </p>
-                 <p>Idioma  {{ card.idioma }}</p>
+                <p>Atividade: {{ card.title }}</p>
                </v-card-subtitle>
                <v-card-text>
+                 <p>Atividade nivel  {{ card.nivel }} </p>
+                 <p>Idioma  {{ card.idioma }}</p>
                   <v-rating
                     v-model="card.nota"
                     color="yellow darken-3"
