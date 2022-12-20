@@ -2,12 +2,12 @@
   <v-container class="d-flex justify-center">
     <v-container>
       <v-card v-if="!getIsLoggedIn" elevation="0">
-        <v-card-title color="text--secondary">Aplicação de TCC</v-card-title>
+        <v-card-title color="text--secondary">Panglottai</v-card-title>
         <div>
           <v-card-text>
             <v-row> Aqui temos uma aplicação web para aprendizagem colaborativa de idiomas.</v-row>
             <v-row class="mt-10"> Você pode procurar por um grupo do idioma que você deseja aprender.</v-row>
-            <v-row class="mt-10"> Depois de entrar em um grupo, Você e seu grupo receberão tarefas no idioma a ser aprendido. Essas tarefas lhe farão aprender mais sobre o idioma.</v-row>
+            <v-row class="mt-10"> Depois de entrar em um grupo, Você e seu grupo receberão tarefas no idioma a ser aprendido. Essas tarefas e a interação com seu grupo lhe farão aprender mais sobre o idioma.</v-row>
             <v-row class="mt-10">Quando tiver usado a aplicação o suficiente, por favor, responda à pesquisa a seguir!</v-row>
     
             <v-row class="mt-10"><a href="https://forms.gle/ELiEQNBmfcTTX95R8">PESQUISA</a></v-row>
@@ -23,9 +23,9 @@
             :cols="4"
           >
             <v-card elevation="10" width="300">
-               <v-card-title v-text="card.nome"></v-card-title>
+               <v-card-title v-text="card.title"></v-card-title>
                <v-card-subtitle>
-                <p>Atividade: {{ card.title }}</p>
+                <p>grupo: {{ card.nome }}</p>
                </v-card-subtitle>
                <v-card-text>
                  <p>Atividade nivel  {{ card.nivel }} </p>

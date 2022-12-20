@@ -32,7 +32,7 @@
 								</v-card-text>
 								<v-card-text v-if="tarefa1.tipo === 'audio'">
 					        <!-- <VueRecordAudio mode="press" @result="onResult" />	 -->
-					        <v-card-subtitle><a href="https://online-voice-recorder.com/pt/" target="_blank">Link para um lugar para gravar os audios</a></v-card-subtitle>
+					        <v-card-subtitle><a href="https://online-voice-recorder.com/pt/" target="_blank">Aplicação para gravação de audios</a></v-card-subtitle>
 					        <v-form>
 						        <v-file-input accept=".mp3"  show-size v-model="file" label="Selecione o arquivo"/>
 						       </v-form>
